@@ -17,7 +17,7 @@ const PropertyCard = ({property} : any) => {
         }
     } 
   return (
-    <div className='rounded-xl shadow-md relative'>
+    <div className='rounded-xl shadow-md relative' key={property._id}>
         <Image src={`/images/properties/${property.images[0]}`}
         width={0}
         height={0}
@@ -69,3 +69,4 @@ const PropertyCard = ({property} : any) => {
 }
 
 export default PropertyCard
+ 

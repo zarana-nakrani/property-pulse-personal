@@ -1,12 +1,12 @@
 import React from 'react'
-import Properties from '@/properties.json'
 import PropertyCard from './PropertyCard'
 import Link from 'next/link'
+import { fetchProperties } from '@/utils/requests'
+import { IProperty } from '@/models/Property'
 
-type Props = {}
-
-const RecentProperties = (props: Props) => {
-    const recentProperties = Properties.sort(() => Math.random() - Math.random()).slice(0,3)
+const RecentProperties = async () => {
+    const properties = await fetchProperties();
+    const recentProperties = properties.sort(() => Math.random() - Math.random()).slice(0,3)
   return (
     <>
     <section className='px-4 py-6'>
@@ -15,7 +15,7 @@ const RecentProperties = (props: Props) => {
             <div className='grid grid-cols-1 md:grid-cols-3 gap-6'>
                 {recentProperties.length === 0 ?
                  <p>No properties found</p> :
-                 recentProperties.map((property) => <PropertyCard keys={property._id} property={property}/>)}
+                 recentProperties.map((property: IProperty) => <PropertyCard keys={property._id} property={property}/>)}
             </div>
         </div>
     </section>
