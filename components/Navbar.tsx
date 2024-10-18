@@ -5,16 +5,32 @@ import logo from '@/assets/images/logo-white.png';
 import Link from 'next/link';
 import profileDefault from '@/assets/images/profile.png';
 import { FaGoogle } from 'react-icons/fa';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { usePathname } from 'next/navigation';
+import { signIn, signOut, useSession, getProviders, ClientSafeProvider, LiteralUnion } from 'next-auth/react'
+import { BuiltInProviderType } from 'next-auth/providers/index';
 type Props = {}
 
 const Navbar = (props: Props) => {
 
+  const {data: session} = useSession();
+  const profileImage = session?.user?.image;
   const pathname = usePathname();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isProfileMenuOpen, setIsProfileMenuOpen] = useState(false);
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [providers, setProviders] = useState<Record<LiteralUnion<BuiltInProviderType, string>, ClientSafeProvider> | null>();
+
+  useEffect(() => {
+    const setAuthProviders = async () => {
+      const res = await getProviders();
+      setProviders(res);
+    };
+
+    setAuthProviders();
+  }, [])
+  // console.log(session);
+  // console.log(providers);
+  // console.log(profileImage);
 
   return (
     <nav className="bg-blue-700 border-b border-blue-500">
@@ -75,7 +91,7 @@ const Navbar = (props: Props) => {
                   href="/properties"
                   className={`${pathname === '/properties' ? 'bg-black' : ''} text-white hover:bg-gray-900 hover:text-white rounded-md px-3 py-2`}
                   >Properties</Link>
-                  {isLoggedIn && (
+                  {session && (
                 <Link
                   href="/properties/add"
                   className={`${pathname === '/properties/add' ? 'bg-black' : ''} text-white hover:bg-gray-900 hover:text-white rounded-md px-3 py-2`}
@@ -86,21 +102,23 @@ const Navbar = (props: Props) => {
           </div>
 
           {/* <!-- Right Side Menu (Logged Out) --> */}
-          {!isLoggedIn && (
+          {!session && (
           <div className="hidden md:block md:ml-6">
             <div className="flex items-center">
-              <button
+              {providers && Object.values(providers).map((provider, index) => (
+              <button onClick={() => signIn(provider.id)} key={index}
                 className="flex items-center text-white bg-gray-700 hover:bg-gray-900 hover:text-white rounded-md px-3 py-2"
               >
                 <FaGoogle className='text-white mr-2'/>
                 <span>Login or Register</span>
               </button>
+              ))}
             </div>
           </div>
           )}
 
           {/* <!-- Right Side Menu (Logged In) --> */}
-          { isLoggedIn && (
+          { session && (
           <div
             className="absolute inset-y-0 right-0 flex items-center pr-2 md:static md:inset-auto md:ml-6 md:pr-0"
           >
@@ -148,8 +166,10 @@ const Navbar = (props: Props) => {
                   <span className="sr-only">Open user menu</span>
                   <Image
                     className="h-8 w-8 rounded-full"
-                    src={ profileDefault }
+                    src={ profileImage || profileDefault }
                     alt=""
+                    width={40}
+                    height={40}
                   />
                 </button>
               </div>
@@ -170,6 +190,9 @@ const Navbar = (props: Props) => {
                   role="menuitem"
                   tabIndex={-1}
                   id="user-menu-item-0"
+                  onClick={() => {
+                    setIsProfileMenuOpen(false);
+                  }} 
                   >Your Profile</Link>
                 <Link
                   href="/properties/saved"
@@ -177,8 +200,15 @@ const Navbar = (props: Props) => {
                   role="menuitem"
                   tabIndex={-1}
                   id="user-menu-item-2"
+                  onClick={() => {
+                    setIsProfileMenuOpen(false);
+                  }}
                   >Saved Properties</Link>
                 <button
+                  onClick={() => {
+                    setIsProfileMenuOpen(false);
+                    signOut();
+                  }}
                   className="block px-4 py-2 text-sm text-gray-700"
                   role="menuitem"
                   tabIndex={-1}
@@ -204,20 +234,21 @@ const Navbar = (props: Props) => {
             href="/properties"
             className={`${pathname === '/properties' ? 'bg-black' : ''} text-white block rounded-md px-3 py-2 text-base font-medium`}
             >Properties</Link>
-            {isLoggedIn && (
+            {session && (
           <Link
             href="/properties/add"
             className={`${pathname === '/properties/add' ? 'bg-black' : ''} text-white block rounded-md px-3 py-2 text-base font-medium`}
             >Add Property</Link>
             )}
-            {!isLoggedIn && (
-          <button
-            className="flex items-center text-white bg-gray-700 hover:bg-gray-900 hover:text-white rounded-md px-3 py-2 my-4"
-          >
-            <FaGoogle className='text-white mr-2'/>
-            <span>Login or Register</span>
-          </button>
-            )}
+            {!session && 
+              providers && Object.values(providers).map((provider, index) => (
+                <button onClick={() => signIn(provider.id)} key={index}
+                  className="flex items-center text-white bg-gray-700 hover:bg-gray-900 hover:text-white rounded-md px-3 py-2"
+                >
+                  <FaGoogle className='text-white mr-2'/>
+                  <span>Login or Register</span>
+                </button>
+              ))}
         </div>
       </div>
       )}
