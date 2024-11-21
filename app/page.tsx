@@ -15,7 +15,6 @@ const HomePage = async () => {
         <Hero />
         <InfoBoxes />
         <RecentProperties />
-        <Footer />
     </div>
   )
 }

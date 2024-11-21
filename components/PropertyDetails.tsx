@@ -2,6 +2,7 @@ import { IProperty } from '@/models/Property'
 import React from 'react'
 import { FaBed, FaBookmark, FaCheck, FaPaperPlane, FaRulerCombined, FaShare } from 'react-icons/fa'
 import { FaArrowLeft, FaBath, FaLocationDot, FaXmark } from 'react-icons/fa6'
+import PropertyMap from './PropertyMap'
 
 type Props = {}
 
@@ -98,7 +99,9 @@ const PropertyDetails = ({property}:{property: IProperty}) => {
                         </div>
                     {/* <!-- Map --> */}
                         <div className="bg-white p-6 rounded-lg shadow-md mt-6">
-                            <div id="map"></div>
+                            <div id="map">
+                                <PropertyMap property={property}/>
+                            </div>
                         </div>
                     </main>
     

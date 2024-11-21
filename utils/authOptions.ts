@@ -3,6 +3,14 @@ import User, { IUser } from '@/models/User'
 import GoogleProvider, { GoogleProfile } from 'next-auth/providers/google'
 import type { Profile, Session } from 'next-auth'
 import { NextAuthOptions } from 'next-auth'
+import { DefaultSession } from 'next-auth'
+
+
+export interface UserSession extends Session {
+    user: {
+        id: string
+    } & DefaultSession['user']
+}
 
 
 // interface profile extends GoogleProfile {
@@ -45,11 +53,11 @@ export const authOptions: NextAuthOptions = {
         },
 
         //Modifies the session object
-        async session({ session }: {session: any}){
+        async session({ session }: {session: Session | UserSession}){
             //1. Get the user from database
             const user = await User.findOne({email: session.user?.email});
             //2. Assign the user id to the session
-            session.user ? session.user.id = user._id.toString() : null;
+            session.user ? (session as UserSession).user.id = user._id.toString() : null;
             //3. Return Session
             return session
         }

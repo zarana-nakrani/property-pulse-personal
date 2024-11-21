@@ -7,7 +7,7 @@ async function fetchProperties() {
     if(!apiDomain) {
         return [];
     }
-      const res = await fetch(`${apiDomain}/properties`);
+      const res = await fetch(`${apiDomain}/properties`, {cache: 'no-store'});
   
       if(!res.ok){
         throw new Error('failed to fecth properties');
@@ -28,7 +28,7 @@ async function fetchProperties() {
         return null;
     }
       console.log(id)
-      const res = await fetch(`${apiDomain}/properties/${id}`);
+      const res = await fetch(`${apiDomain}/properties/${id}`, { cache: 'no-store'});
       
       if(!res.ok){
         throw new Error('failed to fecth properties');

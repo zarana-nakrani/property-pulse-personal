@@ -30,6 +30,8 @@ export interface IProperty {
     is_featured?: boolean,
     createdAt?: string,
     updatedAt?:string,
+    isDeleted?: boolean,
+    isModified?: boolean,
 }
 
 const PropertySchema = new Schema<IProperty>({
@@ -115,5 +117,23 @@ const PropertySchema = new Schema<IProperty>({
     timestamps: true,
 })
 
+const deletedPropertySchema = PropertySchema.clone();
+deletedPropertySchema.add({
+    isDeleted: {
+        type: Boolean,
+        default: false,
+    }
+})
+
+const modifiedPropertySchema = PropertySchema.clone();
+modifiedPropertySchema.add({
+    isModified: {
+        type: Boolean,
+        default: false,
+    }
+})
+
 const Property = models.Property || model("Property", PropertySchema);
-export default Property;
+const DeletedProperty = models.DeletedProperty || model("DeletedProperty", deletedPropertySchema); 
+const ModifiedProperty = models.ModifiedProperty || model('ModifiedProperty', modifiedPropertySchema);
+export {Property, DeletedProperty, ModifiedProperty};
