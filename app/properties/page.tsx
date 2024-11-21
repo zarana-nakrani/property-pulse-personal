@@ -3,6 +3,7 @@ import PropertyCard from '@/components/PropertyCard'
 import { error } from 'console';
 import {type IProperty} from '@/models/Property';
 import { fetchProperties } from '@/utils/requests';
+import PropertySearchForm from '@/components/PropertySearchForm';
 type Props = {}
 
 
@@ -11,6 +12,12 @@ const PropertiesPage = async () => {
   const properties: IProperty[] = await fetchProperties();
   properties.sort((a: IProperty ,b:  IProperty) => new Date(a.createdAt ?? "").getDate() - new Date(b.createdAt ?? "").getDate())
   return (
+    <>
+    <section className="bg-blue-700 py-4">
+            <div className="max-w-7xl mx-auto px-4 flex flex-col items-start sm:px-6 lg:px-8">
+                <PropertySearchForm/>
+            </div>
+        </section>
     <section className='px-4 py-6'>
       <div className='container-xl lg:container m-auto px-4 py-6'>
         {properties.length === 0 ? (
@@ -24,6 +31,7 @@ const PropertiesPage = async () => {
         )}
       </div>
     </section>
+    </>
   )
 }
 
