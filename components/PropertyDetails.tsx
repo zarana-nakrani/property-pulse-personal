@@ -1,8 +1,9 @@
 import { IProperty } from '@/models/Property'
 import React from 'react'
-import { FaBed, FaBookmark, FaCheck, FaPaperPlane, FaRulerCombined, FaShare } from 'react-icons/fa'
-import { FaArrowLeft, FaBath, FaLocationDot, FaXmark } from 'react-icons/fa6'
+import { FaBed, FaCheck, FaRulerCombined } from 'react-icons/fa'
+import { FaBath, FaLocationDot, FaXmark } from 'react-icons/fa6'
 import PropertyMap from './PropertyMap'
+import { Gallery, Item } from 'react-photoswipe-gallery';
 
 type Props = {}
 

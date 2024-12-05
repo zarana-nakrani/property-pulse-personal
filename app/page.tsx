@@ -5,6 +5,7 @@ import InfoBoxes from '@/components/InfoBoxes'
 import Footer from '@/components/Footer'
 import RecentProperties from '@/components/RecentProperties'
 import connectDB from '@/config/database'
+import FeaturedProperties from '@/components/FeaturedProperties'
 
 type Props = {}
 
@@ -14,6 +15,7 @@ const HomePage = async () => {
     <div>
         <Hero />
         <InfoBoxes />
+        <FeaturedProperties/>
         <RecentProperties />
     </div>
   )
