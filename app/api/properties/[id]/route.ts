@@ -1,6 +1,5 @@
 import connectDB from "@/config/database";
 import {Property, DeletedProperty, IProperty, ModifiedProperty } from '@/models/Property'
-import { NextApiRequest } from "next";
 import { getSessionUser } from "@/utils/getSessionUser";
 import { NextRequest } from "next/server";
 
@@ -22,7 +21,7 @@ export const GET = async (request: NextRequest, { params }: {
 } 
 
 //DELETE /api/properties/:id 
-export const DELETE = async (request: NextApiRequest, { params }: {
+export const DELETE = async (request: NextRequest, { params }: {
     params: {id: string}
 }) => {
     try{
