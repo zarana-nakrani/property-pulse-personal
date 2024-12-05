@@ -6,8 +6,8 @@ import { IProperty } from '@/models/Property'
 
 const RecentProperties = async () => {
     const data = await fetchProperties();
-    const recentProperties = data.properties.sort(() => Math.random() - Math.random()).slice(0,3)
-  return (
+    const recentProperties = data.properties?.sort(() => Math.random() - Math.random()).slice(0,3)
+  return recentProperties && (
     <>
     <section className='px-4 py-6'>
         <div className='container-xl lg:container m-auto'>
