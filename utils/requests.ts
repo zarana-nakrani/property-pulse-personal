@@ -1,4 +1,4 @@
-const apiDomain = process.env.NEXT_PUBLIC_API_DOMAIN;
+const apiDomain = process.env.NEXT_PUBLIC_API_DOMAIN || 'http://127.0.0.1:3000';
 
 async function fetchProperties({showFeatured = false} = {}) {
 
