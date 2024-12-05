@@ -3,7 +3,7 @@ import Message from "@/models/Message";
 import { getSessionUser } from "@/utils/getSessionUser";
 import { Params } from "next/dist/shared/lib/router/utils/route-matcher";
 
-export const dynamic = 'foce-dynamic'
+export const dynamic = 'force-dynamic'
 
 //PUT /api/messages/:id
 export const PUT =async (request: Request, { params }: {params: Params}) => {
