@@ -1,9 +1,8 @@
 import connectDB from "@/config/database";
 import { Property } from '@/models/Property'
 import { NextRequest } from "next/server";
-import type { UserSession } from "@/utils/authOptions";
-import { getSessionUser } from "@/utils/getSessionUser"
 
+export const dynamic = 'force-dynamic';
 export const GET = async (request: NextRequest, { params }: {
     params: {userId: string}
 }) => {

@@ -2,6 +2,8 @@ import connectDB from "@/config/database";
 import { Property } from '@/models/Property'
 import { NextRequest } from "next/server";
 
+export const dynamic = 'force-dynamic';
+
 //GET /api/properties/featured
 export const GET = async (request: NextRequest) => {
 

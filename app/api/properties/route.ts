@@ -15,6 +15,7 @@ import cloudinary from "@/config/cloudinary";
 //     }
 //   }
 //we are using getServerSession to get the user information like user ID if the user is authenticated
+export const dynamic = 'force-dynamic';
 export const GET = async (request: NextRequest) => {
 
     try{

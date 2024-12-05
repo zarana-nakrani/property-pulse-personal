@@ -3,6 +3,7 @@ import {Property, DeletedProperty, IProperty, ModifiedProperty } from '@/models/
 import { getSessionUser } from "@/utils/getSessionUser";
 import { NextRequest } from "next/server";
 
+
 //GET /api/properties/:id 
 export const GET = async (request: NextRequest, { params }: {
     params: {id: string}
