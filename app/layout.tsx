@@ -14,7 +14,7 @@ export const metadata = {
   keywords: 'rental, find rentals, fond properties',
 }
 
-type props = {}
+
 
 const MainLayout = ({ children }: { children: ReactNode }) => {
   return (
