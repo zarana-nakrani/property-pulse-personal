@@ -7,7 +7,7 @@ async function fetchProperties({showFeatured = false} = {}) {
     if(!apiDomain) {
         return [];
     }
-      const res = await fetch(`${apiDomain}/properties${showFeatured ? '/featured' : ''}`, {cache: 'no-store'});
+      const res = await fetch(`${apiDomain}/properties${showFeatured ? '/featured' : ''}`);
   
       if(!res.ok){
         throw new Error('failed to fecth properties');
@@ -28,7 +28,7 @@ async function fetchProperties({showFeatured = false} = {}) {
         return null;
     }
       console.log(id)
-      const res = await fetch(`${apiDomain}/properties/${id}`, { cache: 'no-store'});
+      const res = await fetch(`${apiDomain}/properties/${id}`);
       
       if(!res.ok){
         throw new Error('failed to fecth properties');
